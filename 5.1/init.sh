@@ -55,9 +55,11 @@ else
   echo "Skipping optional Tiger addresses import"
 fi
 
-if [ "$PBF_URL" != "" ]; then
+if [ "$PBF_URL" != "" ] && [ ! -f "$OSMFILE" ]; then
   echo Downloading OSM extract from "$PBF_URL"
-  "${CURL[@]}" "$PBF_URL" -C - --create-dirs -o $OSMFILE
+  "${CURL[@]}" "$PBF_URL" -C - --create-dirs -o "$OSMFILE"
+else
+  echo "Using existing OSM file: $OSMFILE"
 fi
 
 if [ "$PBF_PATH" != "" ]; then
